@@ -1,0 +1,37 @@
+package problem272;
+import java.util.*;
+
+class TreeNode{
+	int val;
+	TreeNode left;
+	TreeNode right;
+	TreeNode(){}
+	TreeNode(int val){
+		this.val=val;
+	}
+}
+public class Solution {
+	public List<Integer> closestValues(TreeNode root, double target, int k){
+		LinkedList<Integer> list=new LinkedList<Integer>();
+		helper(list,root,target,k);
+		return list;
+	}
+	
+	private boolean helper(LinkedList<Integer> list, TreeNode root, double target, int k){
+		if(root==null){
+			return false;
+		}
+		if(helper(list,root.left,target,k)){
+			return true;
+		}
+		if(list.size()==k){
+			if(Math.abs(list.getFirst()-target)<Math.abs(root.val-target)){
+				return true;				
+			}else{
+				list.removeFirst();
+			}
+		}
+		list.addLast(root.val);
+		return helper(list,root.right,target,k);
+	} 
+}
